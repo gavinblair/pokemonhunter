@@ -128,6 +128,21 @@
             buttons[i].addEventListener('click', function () {
                 col = '#FF0000';
                 if (this.getAttribute('id') == 'seeit') {
+                    //regardless, it's not within 70m of current location
+                    //otherwise we'd see it!
+                    var circle = new google.maps.Circle({
+                        strokeColor: col,
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: col,
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: pos,
+                        radius: 70,
+                        clickable: false
+                    });
+                    circles.push(circle);
+                    
                     col = '#0000FF';
                 }
 
@@ -140,21 +155,6 @@
                     map: map,
                     center: pos,
                     radius: 200,
-                    clickable: false
-                });
-                circles.push(circle);
-
-                //regardless, it's not within 70m of current location
-                //otherwise we'd see it!
-                var circle = new google.maps.Circle({
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35,
-                    map: map,
-                    center: pos,
-                    radius: 70,
                     clickable: false
                 });
                 circles.push(circle);
