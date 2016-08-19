@@ -43,6 +43,7 @@
       var circles = [];
       var col;
       var map;
+      var pos;
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -56,12 +57,23 @@
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
 
             map.setCenter(pos);
+
+            marker = new google.maps.Marker({
+              map: map,
+              draggable: true,
+              animation: google.maps.Animation.DROP,
+              position: pos
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+              pos = marker.getPosition();
+            });
           }, function() {
             handleLocationError(true, map.getCenter());
           });
@@ -69,6 +81,22 @@
           // Browser doesn't support Geolocation
           handleLocationError(false, map.getCenter());
         }
+
+          drawCircle = function(pos, col)
+          {
+              var circle = new google.maps.Circle({
+                  strokeColor: col,
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: col,
+                  fillOpacity: 0.35,
+                  map: map,
+                  center: pos,
+                  radius: 200,
+                  clickable: false
+              });
+              circles.push(circle);
+          };
 
         /*map.addListener('click', function(e) {
           var circle = new google.maps.Circle({
@@ -96,11 +124,6 @@
             if(this.getAttribute('id') == 'seeit') {
               col = '#00FF00';
             }
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
 
               var circle = new google.maps.Circle({
                 strokeColor: col,
@@ -121,7 +144,6 @@
               handleLocationError(true, map.getCenter());
             });
 
-          });
         }
 
 
