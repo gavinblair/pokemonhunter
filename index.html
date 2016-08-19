@@ -13,6 +13,21 @@
       #map {
         height: 100%;
       }
+      button {
+        height: 40px;
+        float: left;
+        width: 50%;
+        border: 1px solid red;
+        background: pink;
+        color: black;
+      }
+      #seeit {
+        border: 1px solid green;
+        background: lightgreen;
+      }
+      #map {
+        clear: both;
+      }
     </style>
   </head>
   <body>
@@ -38,8 +53,6 @@
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
 
-        console.log("GAVIN");
-        console.log(map);
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -49,8 +62,6 @@
               lng: position.coords.longitude
             };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
