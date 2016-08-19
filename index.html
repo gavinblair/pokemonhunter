@@ -1,131 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Geolocation</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-      button {
-        height: 40px;
-        float: left;
-        width: 50%;
-        border: 1px solid red;
-        background: pink;
-        color: black;
-      }
-      #seeit {
-        border: 1px solid green;
-        background: lightgreen;
-      }
-      #map {
-        clear: both;
-      }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+        }
+
+        button {
+            height: 40px;
+            float: left;
+            width: 50%;
+            border: 1px solid red;
+            background: pink;
+            color: black;
+        }
+
+        #seeit {
+            border: 1px solid green;
+            background: lightgreen;
+        }
+
+        #map {
+            clear: both;
+        }
     </style>
-  </head>
-  <body>
-    <button id="seeit">See it!</button>
-    <button id="dontseeit">Don't See it!</button>
-    <div id="map"></div>
-    <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
+</head>
+<body>
+<button id="seeit">See it!</button>
+<button id="dontseeit">Don't See it!</button>
+<div id="map"></div>
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
 
-      var circles = [];
-      var col;
-      var map;
-      var pos;
+    var circles = [];
+    var col;
+    var map;
+    var pos;
 
-      function initMap() {
+    function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 42.9813845, lng: -81.2395378},
-          zoom: 17,
-          disableDefaultUI: true,
-          scrollwheel: false,
-          disableDoubleClickZoom: true
+            center: {lat: 42.9813845, lng: -81.2395378},
+            zoom: 17,
+            disableDefaultUI: true,
+            scrollwheel: false,
+            disableDoubleClickZoom: true
         });
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+            navigator.geolocation.getCurrentPosition(function (position) {
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
-            map.setCenter(pos);
+                map.setCenter(pos);
 
-            marker = new google.maps.Marker({
-              map: map,
-              draggable: true,
-              animation: google.maps.Animation.DROP,
-              position: pos
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: pos
+                });
+
+                google.maps.event.addListener(marker, 'dragend', function () {
+                    pos = marker.getPosition();
+                });
+            }, function () {
+                handleLocationError(true, map.getCenter());
             });
-
-            google.maps.event.addListener(marker, 'dragend', function() {
-              pos = marker.getPosition();
-            });
-          }, function() {
-            handleLocationError(true, map.getCenter());
-          });
         } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, map.getCenter());
+            // Browser doesn't support Geolocation
+            handleLocationError(false, map.getCenter());
         }
 
-          drawCircle = function(pos, col)
-          {
-              var circle = new google.maps.Circle({
-                  strokeColor: col,
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: col,
-                  fillOpacity: 0.35,
-                  map: map,
-                  center: pos,
-                  radius: 200,
-                  clickable: false
-              });
-              circles.push(circle);
-          };
-
-        /*map.addListener('click', function(e) {
-          var circle = new google.maps.Circle({
-              strokeColor: document.querySelector('input[name="color"]:checked').value,
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: document.querySelector('input[name="color"]:checked').value,
-              fillOpacity: 0.35,
-              map: map,
-              center: e.latLng,
-              radius: 200,
-              clickable: false
-          });
-          //google.maps.event.addListener(circle, 'click', function(ev) {
-          //  this.setMap(null);
-          //});
-          circles.push(circle);
-          
-          
-        });*/
-        var buttons = document.getElementsByTagName('button');
-        for(i=0; i<buttons.length; i++) {
-          buttons[i].addEventListener('click', function(){
-            col = '#FF0000';
-            if(this.getAttribute('id') == 'seeit') {
-              col = '#00FF00';
-            }
-
-              var circle = new google.maps.Circle({
+        drawCircle = function (pos, col) {
+            var circle = new google.maps.Circle({
                 strokeColor: col,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -137,29 +99,66 @@
                 clickable: false
             });
             circles.push(circle);
+        };
+
+        /*map.addListener('click', function(e) {
+         var circle = new google.maps.Circle({
+         strokeColor: document.querySelector('input[name="color"]:checked').value,
+         strokeOpacity: 0.8,
+         strokeWeight: 2,
+         fillColor: document.querySelector('input[name="color"]:checked').value,
+         fillOpacity: 0.35,
+         map: map,
+         center: e.latLng,
+         radius: 200,
+         clickable: false
+         });
+         //google.maps.event.addListener(circle, 'click', function(ev) {
+         //  this.setMap(null);
+         //});
+         circles.push(circle);
 
 
+         });*/
+        var buttons = document.getElementsByTagName('button');
+        for (i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+                col = '#FF0000';
+                if (this.getAttribute('id') == 'seeit') {
+                    col = '#00FF00';
+                }
 
-            }, function() {
-              handleLocationError(true, map.getCenter());
+                var circle = new google.maps.Circle({
+                    strokeColor: col,
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: col,
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: pos,
+                    radius: 200,
+                    clickable: false
+                });
+                circles.push(circle);
+
+
+            }, function () {
+                handleLocationError(true, map.getCenter());
             });
 
         }
+    }
 
-
-
-      }
-
-      function handleLocationError(browserHasGeolocation, pos) {
+    function handleLocationError(browserHasGeolocation, pos) {
         var infoWindow = new google.maps.InfoWindow({map: map});
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN6IibO8ckCC72vEjvCHMuAfF3vigJdl0&callback=initMap">
-    </script>
-  </body>
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN6IibO8ckCC72vEjvCHMuAfF3vigJdl0&callback=initMap">
+</script>
+</body>
 </html>
