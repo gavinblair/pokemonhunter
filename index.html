@@ -42,16 +42,16 @@
 
       var circles = [];
       var col;
+      var map;
 
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 42.9813845, lng: -81.2395378},
           zoom: 17,
           disableDefaultUI: true,
           scrollwheel: false,
           disableDoubleClickZoom: true
         });
-        var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -63,11 +63,11 @@
 
             map.setCenter(pos);
           }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
+            handleLocationError(true, map.getCenter());
           });
         } else {
           // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
+          handleLocationError(false, map.getCenter());
         }
 
         /*map.addListener('click', function(e) {
@@ -118,7 +118,7 @@
 
 
             }, function() {
-              handleLocationError(true, infoWindow, map.getCenter());
+              handleLocationError(true, map.getCenter());
             });
 
           });
@@ -128,7 +128,8 @@
 
       }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      function handleLocationError(browserHasGeolocation, pos) {
+        var infoWindow = new google.maps.InfoWindow({map: map});
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
