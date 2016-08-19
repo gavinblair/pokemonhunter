@@ -16,8 +16,8 @@
     </style>
   </head>
   <body>
-    <input type='radio' name="color" value="#00FF00" checked=checked id='green' /> <label for='green'>SEE IT</label><br />
-    <input type='radio' name="color" value="#FF0000" id='red' /> <label for='red'>DON'T SEE IT</label>
+    <button id="seeit">See it!</button>
+    <button id="dontseeit">Don't See it!</button>
     <div id="map"></div>
     <script>
       // Note: This example requires that you consent to location sharing when
@@ -26,6 +26,7 @@
       // locate you.
 
       var circles = [];
+      var col;
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -59,7 +60,7 @@
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
-        map.addListener('click', function(e) {
+        /*map.addListener('click', function(e) {
           var circle = new google.maps.Circle({
               strokeColor: document.querySelector('input[name="color"]:checked').value,
               strokeOpacity: 0.8,
@@ -77,6 +78,38 @@
           circles.push(circle);
           
           
+        });*/
+        document.querySelector('button').addListener('click', function(e){
+          col = '#FF0000';
+          if(this.getAttribute('id') == 'seeit') {
+            col = '#00FF00';
+          }
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            var circle = new google.maps.Circle({
+              strokeColor: col,
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: col,
+              fillOpacity: 0.35,
+              map: map,
+              center: pos,
+              radius: 200,
+              clickable: false
+          });
+          circles.push(circle);
+
+            
+
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+          
+
         });
 
 
