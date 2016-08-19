@@ -128,7 +128,7 @@
             buttons[i].addEventListener('click', function () {
                 col = '#FF0000';
                 if (this.getAttribute('id') == 'seeit') {
-                    //regardless, it's not within 70m of current location
+                    //regardless, it's not within 70m diameter of current location
                     //otherwise we'd see it!
                     var circle = new google.maps.Circle({
                         strokeColor: col,
@@ -138,7 +138,7 @@
                         fillOpacity: 0.35,
                         map: map,
                         center: pos,
-                        radius: 70,
+                        radius: 35,
                         clickable: false
                     });
                     circles.push(circle);
