@@ -79,38 +79,41 @@
           
           
         });*/
-        document.querySelector('button').addListener('click', function(e){
-          col = '#FF0000';
-          if(this.getAttribute('id') == 'seeit') {
-            col = '#00FF00';
-          }
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+        var buttons = document.getElementsByTagName('select');
+        for(i=0; i<buttons.length; i++) {
+          buttons[i].addEventListener('click', function(){
+            col = '#FF0000';
+            if(this.getAttribute('id') == 'seeit') {
+              col = '#00FF00';
+            }
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
 
-            var circle = new google.maps.Circle({
-              strokeColor: col,
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: col,
-              fillOpacity: 0.35,
-              map: map,
-              center: pos,
-              radius: 200,
-              clickable: false
-          });
-          circles.push(circle);
+              var circle = new google.maps.Circle({
+                strokeColor: col,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: col,
+                fillOpacity: 0.35,
+                map: map,
+                center: pos,
+                radius: 200,
+                clickable: false
+            });
+            circles.push(circle);
 
-            
+              
 
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
+            }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+            });
           
+          });
+        }
 
-        });
 
 
       }
