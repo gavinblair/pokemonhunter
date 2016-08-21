@@ -73,8 +73,8 @@
 
     var circles = [];
     var col;
-var so;
-var fo;
+var aso;
+var afo;
     var map;
     var pos;
     var marker;
@@ -137,18 +137,18 @@ var fo;
         for (i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener('click', function () {
                 col = '#FF0000';
-so = 1.0;
-fo = 0.8;
+aso = 1.0;
+afo = 0.8;
 
                 if (this.getAttribute('id') == 'seeit') {
                     //regardless, it's not within 70m diameter of current location
                     //otherwise we'd see it!
                     var circle = new google.maps.Circle({
                         strokeColor: col,
-                        strokeOpacity: so,
+                        strokeOpacity: aso,
                         strokeWeight: 2,
                         fillColor: col,
-                        fillOpacity: fo,
+                        fillOpacity: afo,
                         map: map,
                         center: pos,
                         radius: 35,
@@ -157,16 +157,16 @@ fo = 0.8;
                     circles.push(circle);
                     
                     col = '#00FF00';
-so = 0.8:
-fo = 0.1;
+aso = 0.8:
+afo = 0.1;
                 }
 
                 var circle = new google.maps.Circle({
                     strokeColor: col,
-                    strokeOpacity: so,
+                    strokeOpacity: aso,
                     strokeWeight: 2,
                     fillColor: col,
-                    fillOpacity: fo,
+                    fillOpacity: afo,
                     map: map,
                     center: pos,
                     radius: 200,
