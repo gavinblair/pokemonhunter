@@ -32,6 +32,7 @@ function initMap() {
             };
 
             map.setCenter(pos);
+            map.setZoom(17);
 
             if(!marker) {
                 marker = new google.maps.Marker({
