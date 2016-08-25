@@ -22,8 +22,9 @@ function initMap() {
         clickableIcons: false
     });
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
+    prepMapForHere = function(callback) {
+
+        var callback = callback;
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
                 lat: position.coords.latitude,
@@ -32,12 +33,16 @@ function initMap() {
 
             map.setCenter(pos);
 
-            marker = new google.maps.Marker({
-                map: map,
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-                position: pos
-            });
+            if(!marker) {
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: pos
+                });
+            } else {
+                marker.setPosition(pos);
+            }
 
             startLiveMarker();
 
@@ -46,9 +51,16 @@ function initMap() {
                 pos = marker.getPosition();
             });
 
+            callback()
+
         }, function () {
             handleLocationError(true, map.getCenter());
         });
+    };
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        prepMapForHere(function(){});
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, map.getCenter());
@@ -71,10 +83,6 @@ function initMap() {
                 lng: position.coords.longitude
             };
             marker.setPosition(pos);
-
-            startLiveMarker();
-
-            document.querySelector('#locate i').className = "fa fa-map-marker";
         });
 
 
@@ -85,11 +93,12 @@ function initMap() {
 
         document.querySelector('#refresh i').className = "fa fa-refresh fa-spin";
 
-        for(var i in circles) {
-            circles[i].setMap(null);
-        }
-
-        document.querySelector('#refresh i').className = "fa fa-refresh";
+        prepMapForHere(function(){
+            document.querySelector('#refresh i').className = "fa fa-refresh";
+            for(var i in circles) {
+                circles[i].setMap(null);
+            }
+        });
 
     });
 
