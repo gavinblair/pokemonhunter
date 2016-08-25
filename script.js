@@ -10,6 +10,7 @@ var afo;
 var map;
 var pos;
 var marker;
+var liveMarker;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -38,7 +39,10 @@ function initMap() {
                 position: pos
             });
 
+            startLiveMarker();
+
             google.maps.event.addListener(marker, 'dragend', function () {
+                clearInterval(liveMarker);
                 pos = marker.getPosition();
             });
 
@@ -51,6 +55,7 @@ function initMap() {
     }
 
     map.addListener('click', function (e) {
+        clearInterval(liveMarker);
         pos = e.latLng;
         marker.setPosition(pos);
     });
@@ -63,6 +68,7 @@ function initMap() {
                 lng: position.coords.longitude
             };
             marker.setPosition(pos);
+            startLiveMarker();
         });
     });
     var buttons = document.getElementsByTagName('button');
@@ -120,4 +126,17 @@ function handleLocationError(browserHasGeolocation, pos) {
     infoWindow.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
+}
+
+function startLiveMarker() {
+    liveMarker = setInterval(function(){
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            marker.setPosition(pos);
+        });
+        console.log('hey');
+    }, 2000);
 }
