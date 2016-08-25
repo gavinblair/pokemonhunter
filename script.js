@@ -78,10 +78,12 @@ function initMap() {
             aso = 1.0;
             afo = 0.8;
 
+            var circle;
+
             if (this.getAttribute('id') == 'see-it') {
                 //regardless, it's not within 70m diameter of current location
                 //otherwise we'd see it!
-                var circle = new google.maps.Circle({
+                circle = new google.maps.Circle({
                     strokeColor: col,
                     strokeOpacity: aso,
                     strokeWeight: 2,
@@ -99,7 +101,7 @@ function initMap() {
                 afo = 0.1;
             }
 
-            var circle = new google.maps.Circle({
+            circle = new google.maps.Circle({
                 strokeColor: col,
                 strokeOpacity: aso,
                 strokeWeight: 2,
