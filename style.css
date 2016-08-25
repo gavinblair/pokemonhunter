@@ -45,7 +45,7 @@ header {
 h4 {
     padding: 0;
     margin: 0;
-    float:left;
+    float: left;
     font-size: 1.5em;
 }
 
@@ -94,6 +94,12 @@ i.fa {
 
 #help {
     display: none;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    background: white;
+    margin-top: 3em;
+    padding: 1em;
 }
 
 #help:target {
@@ -105,5 +111,5 @@ i.fa {
 }
 
 p {
-    padding: 1em;
+    padding-bottom: 1em;
 }
