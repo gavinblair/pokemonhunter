@@ -71,7 +71,6 @@ function initMap() {
                 lng: position.coords.longitude
             };
             marker.setPosition(pos);
-            console.log('zoe');
             startLiveMarker();
 
             document.querySelector('#locate i').className = "fa fa-map-marker";
