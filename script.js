@@ -62,14 +62,22 @@ function initMap() {
 
     var locatelink = document.querySelector('#locate');
     locatelink.addEventListener('click', function () {
-        navigator.geolocation.getCurrentPosition(function (position) {
+
+        document.querySelector('#locate i').className = "fa fa-cog fa-spin";
+
+        navigator.geolocation.getCurrentPosition(function (position, link) {
             pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
             marker.setPosition(pos);
+            console.log('zoe');
             startLiveMarker();
+
+            document.querySelector('#locate i').className = "fa fa-map-marker";
         });
+
+
     });
     var buttons = document.getElementsByTagName('button');
     for (i = 0; i < buttons.length; i++) {
@@ -139,6 +147,5 @@ function startLiveMarker() {
             };
             marker.setPosition(pos);
         });
-        console.log('hey');
     }, 2000);
 }
