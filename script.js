@@ -71,6 +71,7 @@ function initMap() {
                 lng: position.coords.longitude
             };
             marker.setPosition(pos);
+
             startLiveMarker();
 
             document.querySelector('#locate i').className = "fa fa-map-marker";
@@ -138,6 +139,11 @@ function handleLocationError(browserHasGeolocation, pos) {
 }
 
 function startLiveMarker() {
+
+    if(liveMarker) {
+        return;
+    }
+
     liveMarker = setInterval(function(){
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
