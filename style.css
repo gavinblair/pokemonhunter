@@ -19,6 +19,7 @@ a {
     text-decoration: none;
 }
 
+
 #refresh {
     right: 3em;
 }
@@ -30,6 +31,11 @@ nav a, #help a {
     top: 1em;
     right: 1em;
     position: fixed;
+}
+
+
+#help .content a {
+    position: static;
 }
 
 #close {

@@ -60,8 +60,8 @@ function initMap() {
         marker.setPosition(pos);
     });
 
-    var locatelink = document.querySelector('#locate');
-    locatelink.addEventListener('click', function () {
+    var locateLink = document.querySelector('#locate');
+    locateLink.addEventListener('click', function () {
 
         document.querySelector('#locate i').className = "fa fa-cog fa-spin";
 
@@ -79,6 +79,20 @@ function initMap() {
 
 
     });
+
+    var refreshLink = document.querySelector('#refresh');
+    refreshLink.addEventListener('click', function () {
+
+        document.querySelector('#refresh i').className = "fa fa-refresh fa-spin";
+
+        for(var i in circles) {
+            circles[i].setMap(null);
+        }
+
+        document.querySelector('#refresh i').className = "fa fa-refresh";
+
+    });
+
     var buttons = document.getElementsByTagName('button');
     for (i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function () {
