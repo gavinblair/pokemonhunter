@@ -85,6 +85,8 @@ function initMap() {
             marker.setPosition(pos);
         });
 
+        startLiveMarker();
+
 
     });
 
@@ -164,6 +166,7 @@ function handleLocationError(browserHasGeolocation, pos) {
 function startLiveMarker() {
 
     if(liveMarker) {
+        document.querySelector('#locate i').className = "fa fa-map-marker";
         return;
     }
 
@@ -176,4 +179,6 @@ function startLiveMarker() {
             marker.setPosition(pos);
         });
     }, 2000);
+
+    document.querySelector('#locate i').className = "fa fa-map-marker";
 }
