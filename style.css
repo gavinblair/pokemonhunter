@@ -1,0 +1,109 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+    font-family: sans-serif;
+}
+
+a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+nav a, #help a {
+    color: dodgerblue;
+    text-decoration: none;
+    background: white;
+    top: 1em;
+    right: 1em;
+    position: fixed;
+}
+
+#help a {
+    z-index: 1000;
+}
+
+header {
+    text-align: right;
+    padding: 1em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    background: white;
+}
+
+h4 {
+    padding: 0;
+    margin: 0;
+    float:left;
+    font-size: 1.5em;
+}
+
+#map {
+    height: 100%;
+}
+
+.buttons {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    z-index: 99;
+}
+
+.buttons > * {
+    height: 40px;
+    float: left;
+    width: 45%;
+    background: pink;
+    color: black;
+    cursor: pointer;
+    border: none;
+}
+
+#locate {
+    display: block;
+    text-align: center;
+    width: 10%;
+    background: lightblue;
+    color: white;
+    padding-top: .5em;
+}
+
+#see-it {
+    background: lightgreen;
+}
+
+#map {
+    clear: both;
+}
+
+i.fa {
+    font-size: 1.5em;
+}
+
+#help {
+    display: none;
+}
+
+#help:target {
+    display: block;
+}
+
+#app {
+    height: 100%;
+}
+
+p {
+    padding: 1em;
+}
